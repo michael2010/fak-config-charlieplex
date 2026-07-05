@@ -2,10 +2,10 @@
 #
 # A Split 3x5+3 keyboard, with a PCB smaller than 100x100mm.
 
-let { ColToRowKey, PeripheralSideKey, .. } = import "fak/keyboard.ncl" in
+let { RowToColKey, ColToRowKey, PeripheralSideKey, .. } = import "fak/keyboard.ncl" in
 let { CH552T, .. } = import "fak/mcus.ncl" in
 
-let MatrixKey = ColToRowKey in
+let MatrixKey = RowToColKey in
 
 # LHS
 let side_central = {
