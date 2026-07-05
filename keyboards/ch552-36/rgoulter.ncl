@@ -31,7 +31,6 @@ let cu = {
   CLOS = keycode.tap.reg.mod.lalt & kc.F4,
   REDO = keycode.tap.reg.mod.lctl & kc.Y,
   UNDO = keycode.tap.reg.mod.lctl & kc.Z,
-  ALL  = keycode.tap.reg.mod.lctl & kc.A,
 
   # Yep. Such names are possible in Nickel.
   ":P" = keycode.tap.reg.mod.lctl & keycode.tap.reg.mod.lalt & kc.DEL,
@@ -67,9 +66,9 @@ let supplemental_layers_record = {
   ## TBI: "Desktop Keys": set-OS (Win, MacOS, Linux)
   ## TBI: Different from Miryoku: Nav,  RHS, upper: TBI the convenience cut/copy/paste and undo/redo
   NavR = [
-    cu.":P",TTTT, TTTT, cu.REDO, TTTT,             cu.REDO, cu.UNDO, cu.COPY, cu.CUT,  cu.PSTE,
-    cu.ALL, cu.SCSH, kc.DEL, TTTT, TTTT,            CW,      kc.LEFT, kc.DOWN, kc.UP,   kc.RGHT,
-    cu.UNDO, TTTT, TTTT, TTTT, TTTT,               kc.INS,  kc.HOME, kc.PGDN, kc.PGUP, kc.END,
+    cu.":P",TTTT, TTTT, TTTT, TTTT,             cu.REDO, cu.UNDO, cu.COPY, cu.CUT,  cu.PSTE,
+    TTTT, cu.SCSH, TTTT, TTTT, TTTT,            CW,      kc.LEFT, kc.DOWN, kc.UP,   kc.RGHT,
+    TTTT, TTTT, TTTT, TTTT, TTTT,               kc.INS,  kc.HOME, kc.PGDN, kc.PGUP, kc.END,
                       TTTT, TTTT, TTTT, kc.ENT, kc.BSPC, kc.DEL,
   ],
 
@@ -77,7 +76,7 @@ let supplemental_layers_record = {
   MouR = [
     TTTT, TTTT, TTTT, TTTT, TTTT,                TTTT,    TTTT,    TTTT,    TTTT,    TTTT,
     TTTT, TTTT, TTTT, TTTT, TTTT,                kc.CAPS, ms.LEFT, ms.DOWN, ms.UP,   ms.RGHT,
-    TTTT, TTTT, TTTT, TTTT, TTTT,                TTTT,    ms.WH_D, ms.WH_U, ms.BTN4, ms.BTN5,
+    TTTT, TTTT, TTTT, TTTT, TTTT,                TTTT,    ms.WH_D, ms.WH_U, TTTT,    TTTT,
                       TTTT, TTTT, TTTT, ms.BTN1, ms.BTN2, ms.BTN3,
   ],
 
@@ -157,7 +156,7 @@ let home_row_mods = [
 ] in
 
 let home_row_mods_rhs = std.array.map_with_index 
-    (fun idx val => if idx == 3 then hmod.rsft else val) 
+    (fun idx val => if idx == 3 then mod.rsft else val) 
     home_row_mods
 in
 
@@ -255,7 +254,7 @@ let LINUX_DESKTOP_RIGHT = kc.PGDN & mod.lgui in
     std.array.map
       (fun layer =>
         # Treat using the two medial thumb keys at the same time as the distal thumb key.
-        let lhs_distal_thumbkey = std.array.at 35 layer in
+        let lhs_distal_thumbkey = std.array.at 30 layer in
         let rhs_distal_thumbkey = std.array.at 35 layer in
         layer @ [lhs_distal_thumbkey, rhs_distal_thumbkey] @ combo_keys)
       (base_layers @ supplemental_layers),
