@@ -2,7 +2,7 @@
 #  which is a slightly modified Miryoku layout.
 
 let keycode = import "fak/keycode.ncl" in
-let { dvorak, to_keycode_segments, .. } = import "lib/layouts.ncl" in
+let { qwerty, qwerty_miryoku, dvorak, to_keycode_segments, .. } = import "lib/layouts.ncl" in
 
 
 # Prelude aliases
@@ -20,11 +20,34 @@ let TTTT = keycode.tap.trans & keycode.hold.trans in
 let BOOT = keycode.tap.custom.fak.BOOT in
 let CW = keycode.tap.custom.fak.CWTG in
 
-# Tap hold behaviors
-let holdtap_behavior_common = {
-  timeout_ms = 200,
+let COLN = keycode.tap.reg.ks.SCLN & keycode.hold.reg.mod.lsft in
+
+# "cu" for custom keys. This is just a name, so it can be whatever you want.
+let cu = {
+  # Again, these are just names. They don't have to be 4-letter or capitalized.
+  COPY = keycode.tap.reg.mod.lctl & kc.C,
+  PSTE = keycode.tap.reg.mod.lctl & kc.V,
+  CUT =  keycode.tap.reg.mod.lctl & kc.X,
+  CLOS = keycode.tap.reg.mod.lalt & kc.F4,
+  REDO = keycode.tap.reg.mod.lctl & kc.Y,
+  UNDO = keycode.tap.reg.mod.lctl & kc.Z,
+  ALL  = keycode.tap.reg.mod.lctl & kc.A,
+
+  # Yep. Such names are possible in Nickel.
+  ":P" = keycode.tap.reg.mod.lctl & keycode.tap.reg.mod.lalt & kc.DEL,
+
+  # Screenshot
+  SCSH = keycode.tap.reg.mod.lgui & keycode.tap.reg.mod.lsft & kc.S,
 } in
 
+# Tap hold behaviors
+let holdtap_behavior_common = {
+  timeout_ms = 350,
+} in
+
+let holdtap_behavior_homerow = {
+  timeout_ms = 200,
+} in
 
 # Number of alpha layers, e.g. Dvorak, Qwerty, etc.
 #
@@ -34,7 +57,7 @@ let num_supplemental_layers = 6 in
 let num_layers = num_base_layers + num_supplemental_layers in
 
 # Convenience tap-hold functions
-let LT = fun layer_num tap => keycode.LT holdtap_behavior_common layer_num tap in
+let LT = fun layer_num tap => keycode.LT holdtap_behavior_homerow layer_num tap in
 
 
 # Miryoku-ish layers
@@ -42,19 +65,19 @@ let supplemental_layers_record = {
 
   # NavR (Navigation keys)
   ## TBI: "Desktop Keys": set-OS (Win, MacOS, Linux)
-  ## TBI: Different from Miryoku: Nav, RHS, upper: TBI the convenience cut/copy/paste and undo/redo
+  ## TBI: Different from Miryoku: Nav,  RHS, upper: TBI the convenience cut/copy/paste and undo/redo
   NavR = [
-    TTTT, TTTT, TTTT, TTTT, TTTT,               TTTT,    TTTT,    TTTT,    TTTT,    TTTT,
-    TTTT, TTTT, TTTT, TTTT, TTTT,               kc.LEFT, kc.DOWN, kc.UP,   kc.RGHT, CW,
-    TTTT, TTTT, TTTT, TTTT, TTTT,               kc.HOME, kc.PGDN, kc.PGUP, kc.END,  kc.INS,
-                      TTTT, TTTT, TTTT, kc.SPC, kc.BSPC, kc.DEL,
+    cu.":P",TTTT, TTTT, cu.REDO, TTTT,             cu.REDO, cu.UNDO, cu.COPY, cu.CUT,  cu.PSTE,
+    cu.ALL, cu.SCSH, kc.DEL, TTTT, TTTT,            CW,      kc.LEFT, kc.DOWN, kc.UP,   kc.RGHT,
+    cu.UNDO, TTTT, TTTT, TTTT, TTTT,               kc.INS,  kc.HOME, kc.PGDN, kc.PGUP, kc.END,
+                      TTTT, TTTT, TTTT, kc.ENT, kc.BSPC, kc.DEL,
   ],
 
   # MouR (Mouse keys)
   MouR = [
     TTTT, TTTT, TTTT, TTTT, TTTT,                TTTT,    TTTT,    TTTT,    TTTT,    TTTT,
-    TTTT, TTTT, TTTT, TTTT, TTTT,                ms.LEFT, ms.DOWN, ms.UP,   ms.RGHT, TTTT,
-    TTTT, TTTT, TTTT, TTTT, TTTT,                TTTT,    ms.WH_D, ms.WH_U, TTTT,    TTTT,
+    TTTT, TTTT, TTTT, TTTT, TTTT,                kc.CAPS, ms.LEFT, ms.DOWN, ms.UP,   ms.RGHT,
+    TTTT, TTTT, TTTT, TTTT, TTTT,                TTTT,    ms.WH_D, ms.WH_U, ms.BTN4, ms.BTN5,
                       TTTT, TTTT, TTTT, ms.BTN1, ms.BTN2, ms.BTN3,
   ],
 
@@ -73,8 +96,8 @@ let supplemental_layers_record = {
   # Different from Miryoku: Number layer, LHS: GRV in middle & slash (rather than semicolon)
   NSL = [
     kc.LBRC, kc.N7, kc.N8, kc.N9,  kc.RBRC,                TTTT, TTTT, TTTT, TTTT, TTTT,
-    kc.GRV,  kc.N4, kc.N5, kc.N6,  kc.EQL,                 TTTT, TTTT, TTTT, TTTT, TTTT,
-    kc.SLSH, kc.N1, kc.N2, kc.N3,  kc.BSLS,                TTTT, TTTT, TTTT, TTTT, TTTT,
+    kc.SCLN, kc.N4, kc.N5, kc.N6,  kc.EQL,                 TTTT, TTTT, TTTT, TTTT, TTTT,
+    kc.GRV, kc.N1, kc.N2, kc.N3,  kc.BSLS,                TTTT, TTTT, TTTT, TTTT, TTTT,
                            kc.DOT, kc.N0,   kc.MINS, TTTT, TTTT, TTTT,
   ],
 
@@ -82,8 +105,8 @@ let supplemental_layers_record = {
   # Different from Miryoku: Number layer, LHS: TILD in middle & slash (rather than colon)
   NSSL = [
     ks.LCBR, ks.AMPR, ks.ASTR, ks.LPRN, ks.RCBR,                TTTT, TTTT, TTTT, TTTT, TTTT,
-    ks.TILD, ks.DLR,  ks.PERC, ks.CIRC, ks.PLUS,                TTTT, TTTT, TTTT, TTTT, TTTT,
-    ks.QUES, ks.EXLM, ks.AT,   ks.HASH, ks.PIPE,                TTTT, TTTT, TTTT, TTTT, TTTT,
+    ks.COLN, ks.DLR,  ks.PERC, ks.CIRC, ks.PLUS,                TTTT, TTTT, TTTT, TTTT, TTTT,
+    ks.TILD, ks.EXLM, ks.AT,   ks.HASH, ks.PIPE,                TTTT, TTTT, TTTT, TTTT, TTTT,
                                ks.LPRN, ks.RPRN, ks.UNDS, TTTT, TTTT, TTTT,
   ],
 
@@ -104,15 +127,18 @@ let
 in
 let supplemental_layers = std.record.values supplemental_layers_record in
 
-
 # Tap-Hold keys used in the thumb cluster
-let SPC_NAVR = LT layer_indices.NavR kc.SPC in
 let TAB_MOUR = LT layer_indices.MouR kc.TAB in
+let SPC_NAVR = LT layer_indices.NavR kc.SPC in
 let ESC_MEDR = LT layer_indices.MedR kc.ESC in
 let BKSP_NSL = LT layer_indices.NSL  kc.BSPC in
 let ENT_NSSL = LT layer_indices.NSSL kc.ENT in
 let DEL_FUNL = LT layer_indices.FunL kc.DEL in
 
+# Different from Miryoku: LHS: miryoku has tab on the medial key; i.e. ESC/MedR, Spc/NavR, Tab/MouR.
+let THUMB_ROW = [
+     ESC_MEDR, SPC_NAVR, TAB_MOUR,    ENT_NSSL, BKSP_NSL, DEL_FUNL
+] in
 
 # Keymap and Home-Row Modifier Helper functions
 
@@ -122,31 +148,37 @@ let DEL_FUNL = LT layer_indices.FunL kc.DEL in
 # LHS mods are used, because it's more common to encounter
 #  situations where only LHS mods are recognised,
 #  than only RHS mods.
-let home_row_mods = let
-  mod = keycode.hold.reg.mod
-in [
-    mod.lalt,
-    mod.lgui,
-    mod.lctl,
-    mod.lsft,
+let hmod = keycode.hold.reg.mod in 
+let home_row_mods = [
+    hmod.lgui,
+    hmod.lalt,
+    hmod.lctl,
+    hmod.lsft,
 ] in
+
+let home_row_mods_rhs = std.array.map_with_index 
+    (fun idx val => if idx == 3 then hmod.rsft else val) 
+    home_row_mods
+in
 
 # Augments an array of keycodes with home row modifier behaviours,
 #  for the LHS home row keycodes.
 #
 # The first four keycodes are augmented with the home row modifiers,
 # the rest are unchanged.
-let with_home_row_mods_lhs = fun keycodes =>
+let with_home_row_mods = fun keycodes mods =>
   std.array.generate
     (fun idx =>
       let kc = std.array.at idx keycodes in
-      if idx < std.array.length home_row_mods then
+      if idx < std.array.length mods then
         keycode.hold.reg.behavior holdtap_behavior_common &
-        std.array.at idx home_row_mods &
+        std.array.at idx mods &
         kc
       else
         kc)
     (std.array.length keycodes) in
+
+let with_home_row_mods_lhs = fun keycodes => with_home_row_mods keycodes home_row_mods in
 
 # Augments an array of keycodes with home row modifier behaviours,
 #  for the RHS home row keycodes.
@@ -155,13 +187,7 @@ let with_home_row_mods_lhs = fun keycodes =>
 # the rest are unchanged.
 let with_home_row_mods_rhs = fun keycodes =>
   # reverse keycodes so it's "lhs", add mods, then reverse that.
-  keycodes |> std.array.reverse |> with_home_row_mods_lhs |> std.array.reverse in
-
-
-# Different from Miryoku: LHS: miryoku has tab on the medial key; i.e. ESC/MedR, Spc/NavR, Tab/MouR.
-let THUMB_ROW = [
-    TAB_MOUR, ESC_MEDR, SPC_NAVR,    ENT_NSSL, BKSP_NSL, DEL_FUNL
-] in
+  keycodes |> std.array.reverse |> (fun k => with_home_row_mods k home_row_mods_rhs) |> std.array.reverse in
 
 # Takes in a 30-character string for the alphabetical keys,
 # and constructs the base layer for the keymap.
@@ -184,7 +210,7 @@ let make_base_layer = fun alphas_str =>
 # Base Layers
 let base_layers = [
     # 0: Dvorak
-    make_base_layer dvorak,
+    make_base_layer qwerty_miryoku,
 ] in
 
 
@@ -229,7 +255,7 @@ let LINUX_DESKTOP_RIGHT = kc.PGDN & mod.lgui in
     std.array.map
       (fun layer =>
         # Treat using the two medial thumb keys at the same time as the distal thumb key.
-        let lhs_distal_thumbkey = std.array.at 30 layer in
+        let lhs_distal_thumbkey = std.array.at 33 layer in
         let rhs_distal_thumbkey = std.array.at 35 layer in
         layer @ [lhs_distal_thumbkey, rhs_distal_thumbkey] @ combo_keys)
       (base_layers @ supplemental_layers),
