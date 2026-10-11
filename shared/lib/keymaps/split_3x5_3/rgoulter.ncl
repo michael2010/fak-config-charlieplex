@@ -255,7 +255,7 @@ let LINUX_DESKTOP_RIGHT = kc.PGDN & mod.lgui in
     std.array.map
       (fun layer =>
         # Treat using the two medial thumb keys at the same time as the distal thumb key.
-        let lhs_distal_thumbkey = std.array.at 33 layer in
+        let lhs_distal_thumbkey = std.array.at 35 layer in
         let rhs_distal_thumbkey = std.array.at 35 layer in
         layer @ [lhs_distal_thumbkey, rhs_distal_thumbkey] @ combo_keys)
       (base_layers @ supplemental_layers),
