@@ -65,10 +65,20 @@ side_central & {
       X 0 4, X 1 4, X 2 4, X 3 4, X 4 4, X 4 1,                               M 3 0, M 0 0, M 0 1, M 0 2, M 0 3, M 0 4,
       X 0 3, X 1 3, X 2 3, X 3 3, X 4 3, X 3 1,                               M 3 1, M 1 0, M 1 1, M 1 2, M 1 3, M 1 4,
       X 0 2, X 1 2, X 2 2, X 3 2, X 4 2, X 2 1,                               M 3 2, M 2 0, M 2 1, M 2 2, M 2 3, M 2 4,
-                                         X 1 1,                               M 3 3, 
-                                         X 3 0, X 1 0,                 M 4 3, M 4 1, 
-                                         X 4 0, X 2 0, X 0 0,   M 4 4, M 4 2, M 4 0,
+#                           X 0 1,                                                           M 3 4,
+                           X 0 0,                                                           M 4 4,
+                                  X 1 0, X 3 0, X 1 1,                 M 3 3, M 4 1, M 4 3, 
+                                         X 2 0, X 4 0,                 M 4 0, M 4 2
     ]
+    # [
+    #   X 0 4, X 1 4, X 2 4, X 3 4, X 4 4, X 4 1,                               M 3 0, M 0 0, M 0 1, M 0 2, M 0 3, M 0 4,
+    #   X 0 3, X 1 3, X 2 3, X 3 3, X 4 3, X 3 1,                               M 3 1, M 1 0, M 1 1, M 1 2, M 1 3, M 1 4,
+    #   X 0 2, X 1 2, X 2 2, X 3 2, X 4 2, X 2 1,                               M 3 2, M 2 0, M 2 1, M 2 2, M 2 3, M 2 4,
+    #                                      X 1 1,                               M 3 3, 
+    #                                      X 3 0, X 1 0,                 M 4 3, M 4 1, 
+    #                                      X 4 0, X 2 0, X 0 0,   M 4 4, M 4 2, M 4 0,
+    # ]
+
     # double mcu setup, so the keys are defined in the peripheral side, and the central side is just a passthrough.
     # [
     #   S 0,  S 1,  S 2,  S 3,  S 4,  S 5,                                M 3 0, M 0 0, M 0 1, M 0 2, M 0 3, M 0 4,
