@@ -41,26 +41,26 @@ in
 
 # Bilateral Home-Row Mod behaviors
 let htb_hrm_lhs = hold.reg.behavior {
-  timeout_ms = 200,
+  timeout_ms = 300,
   timeout_decision = 'hold,
   quick_tap_ms = 150,
   key_interrupts = std.array.map (fun i =>
     if is_lhs_alpha i then
       { decision = 'tap, trigger_on = 'press }
     else
-      { decision = 'hold, trigger_on = 'press }
+      { decision = 'none }
   ) (std.array.range 0 key_count),
 } in
 
 let htb_hrm_rhs = hold.reg.behavior {
-  timeout_ms = 200,
+  timeout_ms = 300,
   timeout_decision = 'hold,
   quick_tap_ms = 150,
   key_interrupts = std.array.map (fun i =>
     if is_rhs_alpha i then
       { decision = 'tap, trigger_on = 'press }
     else
-      { decision = 'hold, trigger_on = 'press }
+      { decision = 'none }
   ) (std.array.range 0 key_count),
 } in
 
@@ -149,7 +149,7 @@ let DEV_T = tm.lctl & tm.lsft & kc.I in
     # =========================================================================
     [
       kc.GRV,        kc.Q,          kc.W,          kc.E,          kc.R,          kc.T,                                                       kc.Y,          kc.U,          kc.I,          kc.O,          kc.P,          kc.BSLS,
-      kc.MINS,       hm_l md.lgui kc.A, hm_l md.lalt kc.S, hm_l md.lctl kc.D, hm_l md.lsft kc.F, kc.G,                                       kc.H,          hm_r md.rsft kc.J, hm_r md.rctl kc.K, hm_r md.ralt kc.L, hm_r md.rgui kc.SCLN, kc.QUOT,
+      hm_l md.lgui kc.MINS, kc.A,      hm_l md.lalt kc.S, hm_l md.lctl kc.D, hm_l md.lsft kc.F, kc.G,                                       kc.H,          hm_r md.rsft kc.J, hm_r md.rctl kc.K, hm_r md.ralt kc.L, kc.SCLN, hm_r md.rgui kc.QUOT,
       mt md.lctl kc.BSPC, kc.Z,     kc.X,          kc.C,          kc.V,          kc.B,                                                       kc.N,          kc.M,          kc.COMM,       kc.DOT,        kc.SLSH,       mt md.rctl fk.REP,
                                                    key36_cs,                                                                                                               key37_ca,
                                                    # Top Thumb Row (X x x   x x X)
